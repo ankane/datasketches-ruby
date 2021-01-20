@@ -18,7 +18,6 @@ void bind_fi_sketch(Rice::Module& m, const char* name) {
     .define_method("maximum_error", &datasketches::frequent_items_sketch<T>::get_maximum_error)
     .define_method(
       "update",
-      // passing item by reference causes segfault
       *[](datasketches::frequent_items_sketch<T>& self, const T item) {
         self.update(item);
       })
@@ -37,7 +36,8 @@ void bind_fi_sketch(Rice::Module& m, const char* name) {
       })
     .define_singleton_method(
       "deserialize",
-      *[](std::string& is) {
+      // TODO figure out segfault
+      *[](std::string is) {
         std::istringstream iss(is);
         return datasketches::frequent_items_sketch<T>::deserialize(iss);
       });

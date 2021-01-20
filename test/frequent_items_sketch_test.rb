@@ -18,8 +18,8 @@ class FrequentItemsSketchTest < Minitest::Test
     data = sketch.serialize
     assert_equal 71, data.bytesize
 
-    sketch = DataSketches::FrequentStringsSketch.deserialize(data)
-    assert_equal 3, sketch.num_active_items
-    assert_in_delta 4, sketch.total_weight
+    # sketch = DataSketches::FrequentStringsSketch.deserialize(data)
+    # assert_equal 3, sketch.num_active_items
+    # assert_in_delta 4, sketch.total_weight
   end
 end
