@@ -15,6 +15,8 @@ using datasketches::theta_union;
 using datasketches::theta_intersection;
 using datasketches::theta_a_not_b;
 
+using Rice::Arg;
+
 void init_theta(Rice::Module& m) {
   Rice::define_class_under<theta_sketch>(m, "ThetaSketch")
     .define_method("empty?", &theta_sketch::is_empty)
@@ -86,5 +88,5 @@ void init_theta(Rice::Module& m) {
 
   Rice::define_class_under<theta_a_not_b>(m, "ThetaANotB")
     .define_constructor(Rice::Constructor<theta_a_not_b>())
-    .define_method("compute", &theta_a_not_b::compute);
+    .define_method("compute", &theta_a_not_b::compute, (Arg("a"), Arg("b"), Arg("ordered") = true));
 }

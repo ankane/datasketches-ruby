@@ -58,6 +58,6 @@ class ThetaSketchTest < Minitest::Test
     %w(b c d).each { |v| b.update(v) }
 
     d = DataSketches::ThetaANotB.new
-    d.compute(a, b, true)
+    d.compute(a, b)
   end
 end
