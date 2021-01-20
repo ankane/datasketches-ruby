@@ -171,6 +171,14 @@ Create a sketch
 sketch = DataSketches::VarOptSketch.new(14)
 ```
 
+Add data
+
+```ruby
+sketch.update(1)
+sketch.update(2.0)
+sketch.update("three")
+```
+
 ## Credits
 
 This library is modeled after the DataSketches [Python API](https://github.com/apache/datasketches-cpp/tree/master/python).
