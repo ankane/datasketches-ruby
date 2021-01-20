@@ -142,6 +142,21 @@ sketch = DataSketches::KllIntsSketch.new(14)
 sketch = DataSketches::KllFloatsSketch.new(14)
 ```
 
+Add data
+
+```ruby
+sketch.update(1)
+sketch.update(2)
+sketch.update(3)
+```
+
+Get the minimum and maximum values from the stream
+
+```ruby
+sketch.min_value
+sketch.max_value
+```
+
 ## VarOpt Sketch
 
 Create a sketch
