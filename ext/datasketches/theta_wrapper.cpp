@@ -24,7 +24,7 @@ void init_theta(Rice::Module& m) {
       });
 
   Rice::define_class_under<update_theta_sketch, theta_sketch>(m, "UpdateThetaSketch")
-    .define_method("compact", &theta_sketch::get_estimate)
+    .define_method("compact", &update_theta_sketch::compact)
     .define_singleton_method(
       "new",
       *[]() {

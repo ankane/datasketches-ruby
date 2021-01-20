@@ -19,5 +19,7 @@ class ThetaSketchTest < Minitest::Test
 
     sketch = DataSketches::UpdateThetaSketch.deserialize(data)
     assert_in_delta 3, sketch.estimate
+
+    assert_kind_of DataSketches::CompactThetaSketch, sketch.compact(true)
   end
 end
