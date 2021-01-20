@@ -118,6 +118,14 @@ Create a sketch
 sketch = DataSketches::FrequentStringsSketch.new(14)
 ```
 
+Add data
+
+```ruby
+sketch.update("a")
+sketch.update("b")
+sketch.update("c")
+```
+
 ## KLL Sketch
 
 Create a sketch
