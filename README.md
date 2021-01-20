@@ -31,7 +31,7 @@ Sampling
 
 - [VarOpt sketch](#varopt-sketch)
 
-### CPC Sketch
+## CPC Sketch
 
 Create a sketch
 
@@ -65,7 +65,7 @@ Load a sketch
 sketch = DataSketches::CpcSketch.deserialize(data)
 ```
 
-### HyperLogLog Sketch
+## HyperLogLog Sketch
 
 Create a sketch
 
