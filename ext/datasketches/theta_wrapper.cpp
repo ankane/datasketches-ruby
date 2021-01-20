@@ -34,10 +34,14 @@ void init_theta(Rice::Module& m) {
   Rice::define_class_under<update_theta_sketch, theta_sketch>(m, "UpdateThetaSketch")
     .define_singleton_method(
       "new",
-      *[]() {
+      *[](uint8_t lg_k, double p, uint64_t seed) {
         update_theta_sketch::builder builder;
+        builder.set_lg_k(lg_k);
+        builder.set_p(p);
+        builder.set_seed(seed);
         return builder.build();
-      })
+      },
+      (Rice::Arg("lg_k")=update_theta_sketch::builder::DEFAULT_LG_K, Rice::Arg("p")=1.0, Rice::Arg("seed")=datasketches::DEFAULT_SEED))
     .define_method("compact", &update_theta_sketch::compact, (Arg("ordered") = true))
     .define_method(
       "update",
