@@ -18,6 +18,7 @@ Distinct counting
 
 - [CPC sketch](#cpc-sketch)
 - [HyperLogLog sketch](#hyperloglog-sketch)
+- [Theta sketch](#theta-sketch)
 
 Most frequent
 
@@ -117,6 +118,14 @@ u = DataSketches::HllUnion.new(14)
 u.update(sketch1)
 u.update(sketch2)
 u.estimate
+```
+
+## Theta Sketch
+
+Create a sketch
+
+```ruby
+sketch = DataSketches::UpdateThetaSketch.new
 ```
 
 ## Frequent Item Sketch

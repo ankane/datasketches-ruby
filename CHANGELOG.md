@@ -1,6 +1,6 @@
 ## 0.1.2 (unreleased)
 
-- Added `CpcUnion`
+- Added `CpcUnion` and `UpdateThetaSketch`
 
 ## 0.1.1 (2021-01-20)
 
