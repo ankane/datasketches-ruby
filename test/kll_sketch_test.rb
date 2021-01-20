@@ -13,6 +13,11 @@ class KllSketchTest < Minitest::Test
     assert_in_delta 2, sketch.quantile(0.5)
     assert_equal [1, 1, 2, 3, 3], sketch.quantiles([0, 0.25, 0.5, 0.75, 1])
     assert_equal [1, 2, 3], sketch.quantiles(3)
+    assert_in_delta 0, sketch.rank(1)
+    assert_in_delta 1, sketch.rank(4)
+    # TODO better test
+    assert sketch.pmf([1, 2, 3])
+    assert sketch.cdf([1, 2, 3])
 
     data = sketch.serialize
     assert_equal 44, data.bytesize

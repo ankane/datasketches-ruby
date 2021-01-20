@@ -9,11 +9,33 @@
 using datasketches::kll_sketch;
 
 template<>
+std::vector<int> from_ruby<std::vector<int>>(Rice::Object x)
+{
+  auto a = Rice::Array(x);
+  std::vector<int> vec(a.size());
+  for (long i = 0; i < a.size(); i++) {
+    vec[i] = from_ruby<int>(a[i]);
+  }
+  return vec;
+}
+
+template<>
+std::vector<float> from_ruby<std::vector<float>>(Rice::Object x)
+{
+  auto a = Rice::Array(x);
+  std::vector<float> vec(a.size());
+  for (long i = 0; i < a.size(); i++) {
+    vec[i] = from_ruby<float>(a[i]);
+  }
+  return vec;
+}
+
+template<>
 std::vector<double> from_ruby<std::vector<double>>(Rice::Object x)
 {
   auto a = Rice::Array(x);
   std::vector<double> vec(a.size());
-  for (size_t i = 0; i < a.size(); i++) {
+  for (long i = 0; i < a.size(); i++) {
     vec[i] = from_ruby<double>(a[i]);
   }
   return vec;
@@ -31,6 +53,16 @@ Rice::Object to_ruby<std::vector<int>>(std::vector<int> const & x)
 
 template<>
 Rice::Object to_ruby<std::vector<float>>(std::vector<float> const & x)
+{
+  auto a = Rice::Array();
+  for (size_t i = 0; i < x.size(); i++) {
+    a.push(x[i]);
+  }
+  return a;
+}
+
+template<>
+Rice::Object to_ruby<std::vector<double>>(std::vector<double> const & x)
 {
   auto a = Rice::Array();
   for (size_t i = 0; i < x.size(); i++) {
@@ -59,6 +91,21 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
         } else {
           return self.get_quantiles(from_ruby<size_t>(obj));
         }
+      })
+    .define_method(
+      "rank",
+      *[](kll_sketch<T>& self, const T item) {
+        return self.get_rank(item);
+      })
+    .define_method(
+      "pmf",
+      *[](kll_sketch<T>& self, std::vector<T> split_points) {
+        return self.get_PMF(&split_points[0], split_points.size());
+      })
+    .define_method(
+      "cdf",
+      *[](kll_sketch<T>& self, std::vector<T> split_points) {
+        return self.get_CDF(&split_points[0], split_points.size());
       })
     .define_method(
       "merge",
