@@ -154,6 +154,31 @@ Load a sketch
 sketch = DataSketches::UpdateThetaSketch.deserialize(data)
 ```
 
+Get the union
+
+```ruby
+u = DataSketches::ThetaUnion.new
+u.update(sketch1)
+u.update(sketch2)
+u.result
+```
+
+Get the intersection
+
+```ruby
+i = DataSketches::ThetaIntersection.new
+i.update(sketch1)
+i.update(sketch2)
+i.result
+```
+
+Compute A not B
+
+```ruby
+d = DataSketches::ThetaANotB.new
+d.compute(a, b)
+```
+
 ## Frequent Item Sketch
 
 Create a sketch
