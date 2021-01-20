@@ -2,7 +2,7 @@ require_relative "test_helper"
 
 class KllSketchTest < Minitest::Test
   def test_ints
-    sketch = DataSketches::KllIntsSketch.new(200)
+    sketch = DataSketches::KllIntsSketch.new
     assert sketch.empty?
     sketch.update(1)
     sketch.update(2)
@@ -24,7 +24,7 @@ class KllSketchTest < Minitest::Test
   end
 
   def test_floats
-    sketch = DataSketches::KllFloatsSketch.new(200)
+    sketch = DataSketches::KllFloatsSketch.new
     assert sketch.empty?
     sketch.update(1)
     sketch.update(2)
@@ -45,10 +45,10 @@ class KllSketchTest < Minitest::Test
   end
 
   def test_merge
-    sketch = DataSketches::KllIntsSketch.new(200)
+    sketch = DataSketches::KllIntsSketch.new
     sketch.update(1)
 
-    other = DataSketches::KllIntsSketch.new(200)
+    other = DataSketches::KllIntsSketch.new
     other.update(2)
 
     sketch.merge(other)
