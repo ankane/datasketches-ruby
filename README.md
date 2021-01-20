@@ -12,12 +12,20 @@ Add this line to your application’s Gemfile:
 gem 'datasketches'
 ```
 
-## Data Structures
+## Sketch Families
 
 Distinct counting
 
-- [CPC Sketch](#cpc-sketch)
-- [HyperLogLog Sketch](#hyperloglog-sketch)
+- [CPC sketch](#cpc-sketch)
+- [HyperLogLog sketch](#hyperloglog-sketch)
+
+Most frequent
+
+- [Frequent item sketch](#frequent-item-sketch)
+
+Quantiles and histograms
+
+- [KLL sketch](#kll-sketch)
 
 ### CPC Sketch
 
@@ -96,6 +104,24 @@ u = DataSketches::HllUnion.new(14)
 u.update(sketch1)
 u.update(sketch2)
 u.estimate
+```
+
+## Frequent Item Sketch
+
+Create a sketch
+
+```ruby
+sketch = DataSketches::FrequentStringsSketch.new(14)
+```
+
+## KLL Sketch
+
+Create a sketch
+
+```ruby
+sketch = DataSketches::KllIntsSketch.new(14)
+# or
+sketch = DataSketches::KllFloatsSketch.new(14)
 ```
 
 ## Credits
