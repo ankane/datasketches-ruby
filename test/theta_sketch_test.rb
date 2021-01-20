@@ -49,4 +49,15 @@ class ThetaSketchTest < Minitest::Test
     assert i.result?
     assert_in_delta 2, i.result(true).estimate
   end
+
+  def test_a_not_b
+    a = DataSketches::UpdateThetaSketch.new(14)
+    %w(a b c).each { |v| a.update(v) }
+
+    b = DataSketches::UpdateThetaSketch.new(14)
+    %w(b c d).each { |v| b.update(v) }
+
+    d = DataSketches::ThetaANotB.new
+    d.compute(a, b, true)
+  end
 end
