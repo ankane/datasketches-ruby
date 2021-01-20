@@ -54,7 +54,7 @@ void init_hll(Rice::Module& m) {
         return datasketches::hll_sketch::deserialize(iss);
       });
 
-  define_class_under<datasketches::hll_union>(m, "HllUnion")
+  Rice::define_class_under<datasketches::hll_union>(m, "HllUnion")
     .define_constructor(Rice::Constructor<datasketches::hll_union, int>())
     .define_method(
       "update",
