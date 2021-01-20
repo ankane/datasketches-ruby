@@ -6,6 +6,9 @@ ext = File.expand_path(".", __dir__)
 datasketches = File.expand_path("../../vendor/datasketches-cpp", __dir__)
 
 $srcs = Dir["#{ext}/*.cpp"]
-$INCFLAGS += " -I#{datasketches}/common/include -I#{datasketches}/cpc/include -I#{datasketches}/fi/include -I#{datasketches}/hll/include -I#{datasketches}/kll/include -I#{datasketches}/sampling/include"
+
+%w(common cpc fi hll kll sampling theta tuple).each do |v|
+  $INCFLAGS += " -I#{datasketches}/#{v}/include"
+end
 
 create_makefile("datasketches/ext")
