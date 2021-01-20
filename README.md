@@ -210,6 +210,12 @@ sketch.update(2.0)
 sketch.update("three")
 ```
 
+Sample data
+
+```ruby
+sketch.samples
+```
+
 ## Credits
 
 This library is modeled after the DataSketches [Python API](https://github.com/apache/datasketches-cpp/tree/master/python).
