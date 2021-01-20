@@ -38,7 +38,7 @@ void init_theta(Rice::Module& m) {
         update_theta_sketch::builder builder;
         return builder.build();
       })
-    .define_method("compact", &update_theta_sketch::compact)
+    .define_method("compact", &update_theta_sketch::compact, (Arg("ordered") = true))
     .define_method(
       "update",
       *[](update_theta_sketch& self, Rice::Object datum) {
@@ -78,12 +78,12 @@ void init_theta(Rice::Module& m) {
         return builder.build();
       })
     .define_method("update", &theta_union::update)
-    .define_method("result", &theta_union::get_result);
+    .define_method("result", &theta_union::get_result, (Arg("ordered") = true));
 
   Rice::define_class_under<theta_intersection>(m, "ThetaIntersection")
     .define_constructor(Rice::Constructor<theta_intersection>())
     .define_method("update", &theta_intersection::update)
-    .define_method("result", &theta_intersection::get_result)
+    .define_method("result", &theta_intersection::get_result, (Arg("ordered") = true))
     .define_method("result?", &theta_intersection::has_result);
 
   Rice::define_class_under<theta_a_not_b>(m, "ThetaANotB")

@@ -20,7 +20,7 @@ class ThetaSketchTest < Minitest::Test
     sketch = DataSketches::UpdateThetaSketch.deserialize(data)
     assert_in_delta 3, sketch.estimate
 
-    assert_kind_of DataSketches::CompactThetaSketch, sketch.compact(true)
+    assert_kind_of DataSketches::CompactThetaSketch, sketch.compact
   end
 
   def test_union
@@ -33,7 +33,7 @@ class ThetaSketchTest < Minitest::Test
     u = DataSketches::ThetaUnion.new
     u.update(a)
     u.update(b)
-    assert_in_delta 4, u.result(true).estimate
+    assert_in_delta 4, u.result.estimate
   end
 
   def test_intersection
@@ -47,7 +47,7 @@ class ThetaSketchTest < Minitest::Test
     i.update(a)
     i.update(b)
     assert i.result?
-    assert_in_delta 2, i.result(true).estimate
+    assert_in_delta 2, i.result.estimate
   end
 
   def test_a_not_b
