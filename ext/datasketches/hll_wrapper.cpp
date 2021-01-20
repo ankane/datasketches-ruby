@@ -14,6 +14,7 @@ void init_hll(Rice::Module& m) {
     .define_method("lg_config_k", &hll_sketch::get_lg_config_k)
     .define_method("compact?", &hll_sketch::is_compact)
     .define_method("empty?", &hll_sketch::is_empty)
+    .define_method("composite_estimate", &hll_sketch::get_composite_estimate)
     .define_method(
       "update",
       *[](hll_sketch& self, Rice::Object datum) {

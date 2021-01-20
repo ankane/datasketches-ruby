@@ -11,6 +11,7 @@ class HllSketchTest < Minitest::Test
     sketch.update(2.0)
     sketch.update("three")
     assert_in_delta 3, sketch.estimate
+    assert_in_delta 3, sketch.composite_estimate
     assert !sketch.empty?
 
     data = sketch.serialize_compact
