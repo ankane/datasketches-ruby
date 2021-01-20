@@ -2,8 +2,40 @@
 
 #include <kll_sketch.hpp>
 
+#include <rice/Array.hpp>
 #include <rice/Constructor.hpp>
 #include <rice/Module.hpp>
+
+template<>
+std::vector<double> from_ruby<std::vector<double>>(Rice::Object x)
+{
+  auto a = Rice::Array(x);
+  std::vector<double> vec(a.size());
+  for (size_t i = 0; i < a.size(); i++) {
+    vec[i] = from_ruby<double>(a[i]);
+  }
+  return vec;
+}
+
+template<>
+Rice::Object to_ruby<std::vector<int>>(std::vector<int> const & x)
+{
+  auto a = Rice::Array();
+  for (size_t i = 0; i < x.size(); i++) {
+    a.push(x[i]);
+  }
+  return a;
+}
+
+template<>
+Rice::Object to_ruby<std::vector<float>>(std::vector<float> const & x)
+{
+  auto a = Rice::Array();
+  for (size_t i = 0; i < x.size(); i++) {
+    a.push(x[i]);
+  }
+  return a;
+}
 
 template<typename T>
 void bind_kll_sketch(Rice::Module& m, const char* name) {
@@ -13,6 +45,11 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
     .define_method("min_value", &datasketches::kll_sketch<T>::get_min_value)
     .define_method("max_value", &datasketches::kll_sketch<T>::get_max_value)
     .define_method("quantile", &datasketches::kll_sketch<T>::get_quantile)
+    .define_method(
+      "quantiles",
+      *[](datasketches::kll_sketch<T>& self, std::vector<double> fractions) {
+        return self.get_quantiles(&fractions[0], fractions.size());
+      })
     .define_method(
       "update",
       *[](datasketches::kll_sketch<T>& self, const T item) {
