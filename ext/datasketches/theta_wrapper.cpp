@@ -1,6 +1,9 @@
 #include <sstream>
 
 #include <theta_sketch.hpp>
+#include <theta_union.hpp>
+#include <theta_intersection.hpp>
+#include <theta_a_not_b.hpp>
 
 #include <rice/Constructor.hpp>
 #include <rice/Module.hpp>
@@ -8,6 +11,9 @@
 using datasketches::theta_sketch;
 using datasketches::update_theta_sketch;
 using datasketches::compact_theta_sketch;
+using datasketches::theta_union;
+using datasketches::theta_intersection;
+using datasketches::theta_a_not_b;
 
 void init_theta(Rice::Module& m) {
   Rice::define_class_under<theta_sketch>(m, "ThetaSketch")
@@ -24,13 +30,13 @@ void init_theta(Rice::Module& m) {
       });
 
   Rice::define_class_under<update_theta_sketch, theta_sketch>(m, "UpdateThetaSketch")
-    .define_method("compact", &update_theta_sketch::compact)
     .define_singleton_method(
       "new",
       *[]() {
         update_theta_sketch::builder builder;
         return builder.build();
       })
+    .define_method("compact", &update_theta_sketch::compact)
     .define_method(
       "update",
       *[](update_theta_sketch& self, Rice::Object datum) {
@@ -61,4 +67,24 @@ void init_theta(Rice::Module& m) {
         std::istringstream iss(is);
         return compact_theta_sketch::deserialize(iss);
       });
+
+  Rice::define_class_under<theta_union>(m, "ThetaUnion")
+    .define_singleton_method(
+      "new",
+      *[]() {
+        theta_union::builder builder;
+        return builder.build();
+      })
+    .define_method("update", &theta_union::update)
+    .define_method("result", &theta_union::get_result);
+
+  Rice::define_class_under<theta_intersection>(m, "ThetaIntersection")
+    .define_constructor(Rice::Constructor<theta_intersection>())
+    .define_method("update", &theta_intersection::update)
+    .define_method("result", &theta_intersection::get_result)
+    .define_method("result?", &theta_intersection::has_result);
+
+  Rice::define_class_under<theta_a_not_b>(m, "ThetaANotB")
+    .define_constructor(Rice::Constructor<theta_a_not_b>())
+    .define_method("compute", &theta_a_not_b::compute);
 }

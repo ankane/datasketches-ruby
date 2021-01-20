@@ -22,4 +22,31 @@ class ThetaSketchTest < Minitest::Test
 
     assert_kind_of DataSketches::CompactThetaSketch, sketch.compact(true)
   end
+
+  def test_union
+    a = DataSketches::UpdateThetaSketch.new(14)
+    %w(a b c).each { |v| a.update(v) }
+
+    b = DataSketches::UpdateThetaSketch.new(14)
+    %w(b c d).each { |v| b.update(v) }
+
+    u = DataSketches::ThetaUnion.new
+    u.update(a)
+    u.update(b)
+    assert_in_delta 4, u.result(true).estimate
+  end
+
+  def test_intersection
+    a = DataSketches::UpdateThetaSketch.new(14)
+    %w(a b c).each { |v| a.update(v) }
+
+    b = DataSketches::UpdateThetaSketch.new(14)
+    %w(b c d).each { |v| b.update(v) }
+
+    i = DataSketches::ThetaIntersection.new
+    i.update(a)
+    i.update(b)
+    assert i.result?
+    assert_in_delta 2, i.result(true).estimate
+  end
 end
