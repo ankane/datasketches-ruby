@@ -13,6 +13,7 @@ void bind_vo_sketch(Rice::Module &m, const char* name) {
     .define_method("k", &datasketches::var_opt_sketch<T>::get_k)
     .define_method("n", &datasketches::var_opt_sketch<T>::get_n)
     .define_method("empty?", &datasketches::var_opt_sketch<T>::is_empty)
+    .define_method("reset", &datasketches::var_opt_sketch<T>::reset)
     .define_method(
       "samples",
       *[](datasketches::var_opt_sketch<T>& self) {
