@@ -162,10 +162,11 @@ sketch.update(2)
 sketch.update(3)
 ```
 
-Get quantile
+Get quantiles
 
 ```ruby
 sketch.quantile(0.5)
+sketch.quantiles([0.25, 0.5, 0.75])
 ```
 
 Get the minimum and maximum values from the stream
