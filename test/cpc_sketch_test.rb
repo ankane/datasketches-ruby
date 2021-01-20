@@ -2,8 +2,8 @@ require_relative "test_helper"
 
 class CpcSketchTest < Minitest::Test
   def test_works
-    sketch = DataSketches::CpcSketch.new(14)
-    assert_equal 14, sketch.lg_k
+    sketch = DataSketches::CpcSketch.new
+    assert_equal 11, sketch.lg_k
     assert sketch.empty?
 
     sketch.update(1)
@@ -23,7 +23,7 @@ class CpcSketchTest < Minitest::Test
   end
 
   def test_bignum
-    sketch = DataSketches::CpcSketch.new(14)
+    sketch = DataSketches::CpcSketch.new
     sketch.update(2**64)
   end
 end
