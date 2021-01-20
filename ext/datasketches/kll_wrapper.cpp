@@ -51,6 +51,11 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
         return self.get_quantiles(&fractions[0], fractions.size());
       })
     .define_method(
+      "merge",
+      *[](datasketches::kll_sketch<T>& self, const datasketches::kll_sketch<T>& other) {
+        self.merge(other);
+      })
+    .define_method(
       "update",
       *[](datasketches::kll_sketch<T>& self, const T item) {
         self.update(item);
