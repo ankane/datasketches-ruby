@@ -115,7 +115,7 @@ u.estimate
 Create a sketch
 
 ```ruby
-sketch = DataSketches::FrequentStringsSketch.new(14)
+sketch = DataSketches::FrequentStringsSketch.new(64)
 ```
 
 Add data
@@ -137,9 +137,9 @@ sketch.estimate("a")
 Create a sketch
 
 ```ruby
-sketch = DataSketches::KllIntsSketch.new(14)
+sketch = DataSketches::KllIntsSketch.new(200)
 # or
-sketch = DataSketches::KllFloatsSketch.new(14)
+sketch = DataSketches::KllFloatsSketch.new(200)
 ```
 
 Add data
