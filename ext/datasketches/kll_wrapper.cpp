@@ -52,8 +52,13 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
     .define_method("quantile", &kll_sketch<T>::get_quantile)
     .define_method(
       "quantiles",
-      *[](kll_sketch<T>& self, std::vector<double> fractions) {
-        return self.get_quantiles(&fractions[0], fractions.size());
+      *[](kll_sketch<T>& self, Rice::Object obj) {
+        if (obj.is_a(rb_cArray)) {
+          auto fractions = from_ruby<std::vector<double>>(obj);
+          return self.get_quantiles(&fractions[0], fractions.size());
+        } else {
+          return self.get_quantiles(from_ruby<size_t>(obj));
+        }
       })
     .define_method(
       "merge",

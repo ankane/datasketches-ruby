@@ -12,6 +12,7 @@ class KllSketchTest < Minitest::Test
     assert_equal 3, sketch.max_value
     assert_in_delta 2, sketch.quantile(0.5)
     assert_equal [1, 1, 2, 3, 3], sketch.quantiles([0, 0.25, 0.5, 0.75, 1])
+    assert_equal [1, 2, 3], sketch.quantiles(3)
 
     data = sketch.serialize
     assert_equal 44, data.bytesize
