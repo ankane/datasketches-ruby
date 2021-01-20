@@ -10,5 +10,7 @@ class VarOptSketchTest < Minitest::Test
     sketch.update(2.0)
     sketch.update("three")
     assert_equal 3, sketch.n
+
+    # assert_equal [[1, 1.0], [2.0, 1.0], ["three", 1.0]], sketch.samples
   end
 end

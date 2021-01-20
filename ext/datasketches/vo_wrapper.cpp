@@ -2,6 +2,7 @@
 
 #include <var_opt_sketch.hpp>
 
+#include <rice/Array.hpp>
 #include <rice/Constructor.hpp>
 #include <rice/Module.hpp>
 
@@ -11,6 +12,19 @@ void bind_vo_sketch(Rice::Module &m, const char* name) {
     .define_constructor(Rice::Constructor<datasketches::var_opt_sketch<T>, uint32_t>())
     .define_method("k", &datasketches::var_opt_sketch<T>::get_k)
     .define_method("n", &datasketches::var_opt_sketch<T>::get_n)
+    .define_method("empty?", &datasketches::var_opt_sketch<T>::is_empty)
+    .define_method(
+      "samples",
+      *[](datasketches::var_opt_sketch<T>& self) {
+        auto a = Rice::Array();
+        for (auto& item : self) {
+          auto t = Rice::Array();
+          t.push(item.first);
+          t.push(item.second);
+          a.push(t);
+        }
+        return a;
+      })
     .define_method(
       "update",
       *[](datasketches::var_opt_sketch<T>& self, const T item) {
