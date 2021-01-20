@@ -132,6 +132,18 @@ Estimate the frequency of an item
 sketch.estimate("a")
 ```
 
+Save a sketch
+
+```ruby
+data = sketch.serialize
+```
+
+Load a sketch
+
+```ruby
+sketch = DataSketches::FrequentStringsSketch.deserialize(data)
+```
+
 ## KLL Sketch
 
 Create a sketch
@@ -161,6 +173,18 @@ Get the minimum and maximum values from the stream
 ```ruby
 sketch.min_value
 sketch.max_value
+```
+
+Save a sketch
+
+```ruby
+data = sketch.serialize
+```
+
+Load a sketch
+
+```ruby
+sketch = DataSketches::KllIntsSketch.deserialize(data)
 ```
 
 ## VarOpt Sketch
