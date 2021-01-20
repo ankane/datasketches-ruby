@@ -10,5 +10,8 @@ class FrequentItemsSketchTest < Minitest::Test
 
     assert_equal 3, sketch.num_active_items
     assert_in_delta 4, sketch.total_weight
+
+    assert_equal 2, sketch.estimate("a")
+    assert_equal 0, sketch.estimate("d")
   end
 end
