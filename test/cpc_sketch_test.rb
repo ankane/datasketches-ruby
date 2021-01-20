@@ -21,4 +21,9 @@ class CpcSketchTest < Minitest::Test
     sketch = DataSketches::CpcSketch.deserialize(serialized)
     assert_in_delta 3, sketch.estimate
   end
+
+  def test_bignum
+    sketch = DataSketches::CpcSketch.new(14)
+    sketch.update(2**64)
+  end
 end

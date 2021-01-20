@@ -23,4 +23,9 @@ class HllSketchTest < Minitest::Test
     sketch = DataSketches::HllSketch.deserialize(serialized)
     assert_in_delta 3, sketch.estimate
   end
+
+  def test_bignum
+    sketch = DataSketches::HllSketch.new(14)
+    sketch.update(2**64)
+  end
 end

@@ -15,7 +15,7 @@ void init_cpc(Rice::Module& m) {
     .define_method(
       "update",
       *[](datasketches::cpc_sketch& self, Rice::Object datum) {
-        if (datum.is_a(rb_cInteger)) {
+        if (FIXNUM_P(datum.value())) {
           return self.update(from_ruby<int64_t>(datum));
         } else if (datum.is_a(rb_cNumeric)) {
           return self.update(from_ruby<double>(datum));
