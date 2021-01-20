@@ -150,6 +150,12 @@ sketch.update(2)
 sketch.update(3)
 ```
 
+Get quantile
+
+```ruby
+sketch.quantile(0.5)
+```
+
 Get the minimum and maximum values from the stream
 
 ```ruby

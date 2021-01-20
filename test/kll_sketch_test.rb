@@ -10,6 +10,7 @@ class KllSketchTest < Minitest::Test
 
     assert_equal 1, sketch.min_value
     assert_equal 3, sketch.max_value
+    assert_in_delta 2, sketch.quantile(0.5)
   end
 
   def test_floats
@@ -21,5 +22,6 @@ class KllSketchTest < Minitest::Test
 
     assert_in_delta 1, sketch.min_value
     assert_in_delta 3, sketch.max_value
+    assert_in_delta 2, sketch.quantile(0.5)
   end
 end

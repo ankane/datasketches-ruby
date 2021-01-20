@@ -12,6 +12,7 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
     .define_method("empty?", &datasketches::kll_sketch<T>::is_empty)
     .define_method("min_value", &datasketches::kll_sketch<T>::get_min_value)
     .define_method("max_value", &datasketches::kll_sketch<T>::get_max_value)
+    .define_method("quantile", &datasketches::kll_sketch<T>::get_quantile)
     .define_method(
       "update",
       *[](datasketches::kll_sketch<T>& self, const T item) {
