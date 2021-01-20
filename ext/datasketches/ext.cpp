@@ -4,6 +4,7 @@ void init_cpc(Rice::Module& m);
 void init_fi(Rice::Module& m);
 void init_hll(Rice::Module& m);
 void init_kll(Rice::Module& m);
+void init_vo(Rice::Module& m);
 
 extern "C"
 void Init_ext()
@@ -13,4 +14,5 @@ void Init_ext()
   init_fi(m);
   init_hll(m);
   init_kll(m);
+  init_vo(m);
 }

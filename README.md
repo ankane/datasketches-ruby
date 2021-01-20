@@ -27,6 +27,10 @@ Quantiles and histograms
 
 - [KLL sketch](#kll-sketch)
 
+Sampling
+
+- [VarOpt sketch](#varopt-sketch)
+
 ### CPC Sketch
 
 Create a sketch
@@ -122,6 +126,14 @@ Create a sketch
 sketch = DataSketches::KllIntsSketch.new(14)
 # or
 sketch = DataSketches::KllFloatsSketch.new(14)
+```
+
+## VarOpt Sketch
+
+Create a sketch
+
+```ruby
+sketch = DataSketches::VarOptSketch.new(14)
 ```
 
 ## Credits
