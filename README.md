@@ -65,6 +65,15 @@ Load a sketch
 sketch = DataSketches::CpcSketch.deserialize(data)
 ```
 
+Get the union
+
+```ruby
+u = DataSketches::CpcUnion.new(14)
+u.update(sketch1)
+u.update(sketch2)
+u.result
+```
+
 ## HyperLogLog Sketch
 
 Create a sketch

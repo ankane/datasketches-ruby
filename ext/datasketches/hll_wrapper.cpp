@@ -58,8 +58,8 @@ void init_hll(Rice::Module& m) {
     .define_constructor(Rice::Constructor<datasketches::hll_union, int>())
     .define_method(
       "update",
-      *[](datasketches::hll_union& self, datasketches::hll_sketch& datum) {
-        self.update(datum);
+      *[](datasketches::hll_union& self, datasketches::hll_sketch& sketch) {
+        self.update(sketch);
       })
     .define_method(
       "estimate",

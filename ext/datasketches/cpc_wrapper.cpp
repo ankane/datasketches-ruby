@@ -1,6 +1,7 @@
 #include <sstream>
 
 #include <cpc_sketch.hpp>
+#include <cpc_union.hpp>
 
 #include <rice/Constructor.hpp>
 #include <rice/Module.hpp>
@@ -46,5 +47,14 @@ void init_cpc(Rice::Module& m) {
       *[](std::string& is) {
         std::istringstream iss(is);
         return datasketches::cpc_sketch::deserialize(iss);
+      });
+
+  Rice::define_class_under<datasketches::cpc_union>(m, "CpcUnion")
+    .define_constructor(Rice::Constructor<datasketches::cpc_union, uint8_t>())
+    .define_method("result", &datasketches::cpc_union::get_result)
+    .define_method(
+      "update",
+      *[](datasketches::cpc_union& self, datasketches::cpc_sketch& sketch) {
+        self.update(sketch);
       });
 }
