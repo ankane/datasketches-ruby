@@ -20,6 +20,25 @@ void bind_fi_sketch(Rice::Module& m, const char* name) {
       "update",
       *[](datasketches::frequent_items_sketch<T>& self, const T& item) {
         self.update(item);
+      })
+    .define_method(
+      "serialize",
+      *[](datasketches::frequent_items_sketch<T>& self) {
+        std::ostringstream oss;
+        self.serialize(oss);
+        return oss.str();
+      })
+    // TODO change to summary?
+    .define_method(
+      "to_string",
+      *[](datasketches::frequent_items_sketch<T>& self) {
+        return self.to_string();
+      })
+    .define_singleton_method(
+      "deserialize",
+      *[](std::string& is) {
+        std::istringstream iss(is);
+        return datasketches::frequent_items_sketch<T>::deserialize(iss);
       });
 }
 

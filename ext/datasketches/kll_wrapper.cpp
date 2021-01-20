@@ -17,6 +17,25 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
       "update",
       *[](datasketches::kll_sketch<T>& self, const T item) {
         self.update(item);
+      })
+    .define_method(
+      "serialize",
+      *[](datasketches::kll_sketch<T>& self) {
+        std::ostringstream oss;
+        self.serialize(oss);
+        return oss.str();
+      })
+    // TODO change to summary?
+    .define_method(
+      "to_string",
+      *[](datasketches::kll_sketch<T>& self) {
+        return self.to_string();
+      })
+    .define_singleton_method(
+      "deserialize",
+      *[](std::string& is) {
+        std::istringstream iss(is);
+        return datasketches::kll_sketch<T>::deserialize(iss);
       });
 }
 

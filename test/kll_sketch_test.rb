@@ -11,6 +11,14 @@ class KllSketchTest < Minitest::Test
     assert_equal 1, sketch.min_value
     assert_equal 3, sketch.max_value
     assert_in_delta 2, sketch.quantile(0.5)
+
+    data = sketch.serialize
+    assert_equal 44, data.bytesize
+
+    sketch = DataSketches::KllIntsSketch.deserialize(data)
+    assert_equal 1, sketch.min_value
+    assert_equal 3, sketch.max_value
+    assert_in_delta 2, sketch.quantile(0.5)
   end
 
   def test_floats
@@ -20,6 +28,14 @@ class KllSketchTest < Minitest::Test
     sketch.update(2)
     sketch.update(3)
 
+    assert_in_delta 1, sketch.min_value
+    assert_in_delta 3, sketch.max_value
+    assert_in_delta 2, sketch.quantile(0.5)
+
+    data = sketch.serialize
+    assert_equal 44, data.bytesize
+
+    sketch = DataSketches::KllFloatsSketch.deserialize(data)
     assert_in_delta 1, sketch.min_value
     assert_in_delta 3, sketch.max_value
     assert_in_delta 2, sketch.quantile(0.5)

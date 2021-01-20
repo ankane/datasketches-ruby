@@ -15,10 +15,10 @@ class CpcSketchTest < Minitest::Test
     assert_in_delta 3, sketch.lower_bound(1)
     assert_in_delta 4, sketch.upper_bound(1)
 
-    serialized = sketch.serialize
-    assert_equal 40, serialized.bytesize
+    data = sketch.serialize
+    assert_equal 40, data.bytesize
 
-    sketch = DataSketches::CpcSketch.deserialize(serialized)
+    sketch = DataSketches::CpcSketch.deserialize(data)
     assert_in_delta 3, sketch.estimate
   end
 
