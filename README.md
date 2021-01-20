@@ -126,6 +126,12 @@ sketch.update("b")
 sketch.update("c")
 ```
 
+Estimate the frequency of an item
+
+```ruby
+sketch.estimate("a")
+```
+
 ## KLL Sketch
 
 Create a sketch
