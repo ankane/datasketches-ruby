@@ -15,6 +15,8 @@ using datasketches::theta_union;
 using datasketches::theta_intersection;
 using datasketches::theta_a_not_b;
 
+using datasketches::DEFAULT_SEED;
+
 using Rice::Arg;
 
 void init_theta(Rice::Module& m) {
@@ -41,7 +43,7 @@ void init_theta(Rice::Module& m) {
         builder.set_seed(seed);
         return builder.build();
       },
-      (Rice::Arg("lg_k")=update_theta_sketch::builder::DEFAULT_LG_K, Rice::Arg("p")=1.0, Rice::Arg("seed")=datasketches::DEFAULT_SEED))
+      (Arg("lg_k")=update_theta_sketch::builder::DEFAULT_LG_K, Arg("p")=1.0, Arg("seed")=DEFAULT_SEED))
     .define_method("compact", &update_theta_sketch::compact, (Arg("ordered") = true))
     .define_method(
       "update",
@@ -77,20 +79,24 @@ void init_theta(Rice::Module& m) {
   Rice::define_class_under<theta_union>(m, "ThetaUnion")
     .define_singleton_method(
       "new",
-      *[]() {
+      *[](uint8_t lg_k, double p, uint64_t seed) {
         theta_union::builder builder;
+        builder.set_lg_k(lg_k);
+        builder.set_p(p);
+        builder.set_seed(seed);
         return builder.build();
-      })
+      },
+      (Arg("lg_k")=update_theta_sketch::builder::DEFAULT_LG_K, Arg("p")=1.0, Arg("seed")=DEFAULT_SEED))
     .define_method("update", &theta_union::update)
     .define_method("result", &theta_union::get_result, (Arg("ordered") = true));
 
   Rice::define_class_under<theta_intersection>(m, "ThetaIntersection")
-    .define_constructor(Rice::Constructor<theta_intersection>())
+    .define_constructor(Rice::Constructor<theta_intersection, uint64_t>(), (Arg("seed")=DEFAULT_SEED))
     .define_method("update", &theta_intersection::update)
     .define_method("result", &theta_intersection::get_result, (Arg("ordered") = true))
     .define_method("result?", &theta_intersection::has_result);
 
   Rice::define_class_under<theta_a_not_b>(m, "ThetaANotB")
-    .define_constructor(Rice::Constructor<theta_a_not_b>())
+    .define_constructor(Rice::Constructor<theta_a_not_b, uint64_t>(), (Arg("seed")=DEFAULT_SEED))
     .define_method("compute", &theta_a_not_b::compute, (Arg("a"), Arg("b"), Arg("ordered") = true));
 }
