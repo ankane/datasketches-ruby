@@ -18,7 +18,7 @@ void bind_vo_sketch(Rice::Module &m, const char* name) {
       "samples",
       *[](datasketches::var_opt_sketch<T>& self) {
         auto a = Rice::Array();
-        for (auto& item : self) {
+        for (auto item : self) {
           auto t = Rice::Array();
           t.push(item.first);
           t.push(item.second);
