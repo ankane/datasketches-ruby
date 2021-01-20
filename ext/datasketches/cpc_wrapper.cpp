@@ -8,6 +8,7 @@
 
 using datasketches::cpc_sketch;
 using datasketches::cpc_union;
+
 using datasketches::CPC_DEFAULT_LG_K;
 using datasketches::DEFAULT_SEED;
 
