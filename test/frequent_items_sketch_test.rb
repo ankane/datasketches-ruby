@@ -13,5 +13,6 @@ class FrequentItemsSketchTest < Minitest::Test
 
     assert_equal 2, sketch.estimate("a")
     assert_equal 0, sketch.estimate("d")
+    assert_equal 0, sketch.maximum_error
   end
 end

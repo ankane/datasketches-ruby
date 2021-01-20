@@ -13,6 +13,9 @@ void bind_fi_sketch(Rice::Module& m, const char* name) {
     .define_method("num_active_items", &datasketches::frequent_items_sketch<T>::get_num_active_items)
     .define_method("total_weight", &datasketches::frequent_items_sketch<T>::get_total_weight)
     .define_method("estimate", &datasketches::frequent_items_sketch<T>::get_estimate)
+    .define_method("lower_bound", &datasketches::frequent_items_sketch<T>::get_lower_bound)
+    .define_method("upper_bound", &datasketches::frequent_items_sketch<T>::get_upper_bound)
+    .define_method("maximum_error", &datasketches::frequent_items_sketch<T>::get_maximum_error)
     .define_method(
       "update",
       *[](datasketches::frequent_items_sketch<T>& self, const T& item) {
