@@ -13,14 +13,14 @@ class HllSketchTest < Minitest::Test
     assert_in_delta 3, sketch.estimate
     assert !sketch.empty?
 
-    serialized = sketch.serialize_compact
-    assert_equal 20, serialized.bytesize
-    sketch = DataSketches::HllSketch.deserialize(serialized)
+    data = sketch.serialize_compact
+    assert_equal 20, data.bytesize
+    sketch = DataSketches::HllSketch.deserialize(data)
     assert_in_delta 3, sketch.estimate
 
-    serialized = sketch.serialize_updatable
-    assert_equal 40, serialized.bytesize
-    sketch = DataSketches::HllSketch.deserialize(serialized)
+    data = sketch.serialize_updatable
+    assert_equal 40, data.bytesize
+    sketch = DataSketches::HllSketch.deserialize(data)
     assert_in_delta 3, sketch.estimate
   end
 
