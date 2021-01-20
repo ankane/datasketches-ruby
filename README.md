@@ -128,6 +128,32 @@ Create a sketch
 sketch = DataSketches::UpdateThetaSketch.new
 ```
 
+Add data
+
+```ruby
+sketch.update(1)
+sketch.update(2.0)
+sketch.update("three")
+```
+
+Estimate the count
+
+```ruby
+sketch.estimate
+```
+
+Save a sketch
+
+```ruby
+data = sketch.serialize
+```
+
+Load a sketch
+
+```ruby
+sketch = DataSketches::UpdateThetaSketch.deserialize(data)
+```
+
 ## Frequent Item Sketch
 
 Create a sketch
