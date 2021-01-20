@@ -117,7 +117,7 @@ Get the union
 u = DataSketches::HllUnion.new(14)
 u.update(sketch1)
 u.update(sketch2)
-u.estimate
+u.result
 ```
 
 ## Theta Sketch

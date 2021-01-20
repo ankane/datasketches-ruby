@@ -69,5 +69,10 @@ void init_hll(Rice::Module& m) {
       "estimate",
       *[](hll_union& self) {
         return self.get_estimate();
+      })
+    .define_method(
+      "result",
+      *[](hll_union& self) {
+        return self.get_result();
       });
 }

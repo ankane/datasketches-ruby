@@ -16,5 +16,6 @@ class HllUnionTest < Minitest::Test
     u.update(sketch1)
     u.update(sketch2)
     assert_in_delta 5, u.estimate
+    assert_in_delta 5, u.result.estimate
   end
 end
