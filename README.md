@@ -188,6 +188,12 @@ Load a sketch
 sketch = DataSketches::KllIntsSketch.deserialize(data)
 ```
 
+Merge sketches
+
+```ruby
+sketch.merge(sketch2)
+```
+
 ## VarOpt Sketch
 
 Create a sketch
