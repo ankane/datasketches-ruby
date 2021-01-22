@@ -37,7 +37,7 @@ Sampling
 Create a sketch
 
 ```ruby
-sketch = DataSketches::CpcSketch.new(14)
+sketch = DataSketches::CpcSketch.new
 ```
 
 Add data
@@ -218,9 +218,9 @@ sketch = DataSketches::FrequentStringsSketch.deserialize(data)
 Create a sketch
 
 ```ruby
-sketch = DataSketches::KllIntsSketch.new(200)
+sketch = DataSketches::KllIntsSketch.new
 # or
-sketch = DataSketches::KllFloatsSketch.new(200)
+sketch = DataSketches::KllFloatsSketch.new
 ```
 
 Add data
