@@ -52,7 +52,7 @@ void init_hll(Rice::Module& m) {
       })
     .define_singleton_function(
       "deserialize",
-      [](std::string& is) {
+      [](const std::string& is) {
         std::istringstream iss(is);
         return hll_sketch::deserialize(iss);
       });

@@ -35,7 +35,7 @@ void init_theta(Rice::Module& m) {
   Rice::define_class_under<compact_theta_sketch, theta_sketch>(m, "CompactThetaSketch")
     .define_singleton_function(
       "deserialize",
-      [](std::string& is) {
+      [](const std::string& is) {
         std::istringstream iss(is);
         return compact_theta_sketch::deserialize(iss);
       });
@@ -70,7 +70,7 @@ void init_theta(Rice::Module& m) {
       })
     .define_singleton_function(
       "deserialize",
-      [](std::string& is) {
+      [](const std::string& is) {
         std::istringstream iss(is);
         return update_theta_sketch::deserialize(iss);
       });
