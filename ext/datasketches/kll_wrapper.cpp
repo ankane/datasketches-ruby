@@ -2,79 +2,31 @@
 
 #include <kll_sketch.hpp>
 
-#include <rice/Array.hpp>
-#include <rice/Constructor.hpp>
-#include <rice/Module.hpp>
+#include "ext.h"
 
 using datasketches::kll_sketch;
 
-template<>
-std::vector<int> from_ruby<std::vector<int>>(Rice::Object x)
+namespace Rice::detail
 {
-  auto a = Rice::Array(x);
-  std::vector<int> vec(a.size());
-  for (long i = 0; i < a.size(); i++) {
-    vec[i] = from_ruby<int>(a[i]);
-  }
-  return vec;
-}
-
-template<>
-std::vector<float> from_ruby<std::vector<float>>(Rice::Object x)
-{
-  auto a = Rice::Array(x);
-  std::vector<float> vec(a.size());
-  for (long i = 0; i < a.size(); i++) {
-    vec[i] = from_ruby<float>(a[i]);
-  }
-  return vec;
-}
-
-template<>
-std::vector<double> from_ruby<std::vector<double>>(Rice::Object x)
-{
-  auto a = Rice::Array(x);
-  std::vector<double> vec(a.size());
-  for (long i = 0; i < a.size(); i++) {
-    vec[i] = from_ruby<double>(a[i]);
-  }
-  return vec;
-}
-
-template<>
-Rice::Object to_ruby<std::vector<int>>(std::vector<int> const & x)
-{
-  auto a = Rice::Array();
-  for (size_t i = 0; i < x.size(); i++) {
-    a.push(x[i]);
-  }
-  return a;
-}
-
-template<>
-Rice::Object to_ruby<std::vector<float>>(std::vector<float> const & x)
-{
-  auto a = Rice::Array();
-  for (size_t i = 0; i < x.size(); i++) {
-    a.push(x[i]);
-  }
-  return a;
-}
-
-template<>
-Rice::Object to_ruby<std::vector<double>>(std::vector<double> const & x)
-{
-  auto a = Rice::Array();
-  for (size_t i = 0; i < x.size(); i++) {
-    a.push(x[i]);
-  }
-  return a;
+  template<typename T>
+  class To_Ruby<std::vector<T>>
+  {
+  public:
+    VALUE convert(std::vector<T> const & x)
+    {
+      auto a = rb_ary_new2(x.size());
+      for (const auto& v : x) {
+        detail::protect(rb_ary_push, a, To_Ruby<T>().convert(v));
+      }
+      return a;
+    }
+  };
 }
 
 template<typename T>
 void bind_kll_sketch(Rice::Module& m, const char* name) {
   Rice::define_class_under<kll_sketch<T>>(m, name)
-    .define_constructor(Rice::Constructor<kll_sketch<T>, uint16_t>(), (Rice::Arg("k")=kll_sketch<T>::DEFAULT_K))
+    .define_constructor(Rice::Constructor<kll_sketch<T>, uint16_t>(), Rice::Arg("k")=kll_sketch<T>::DEFAULT_K)
     .define_method("empty?", &kll_sketch<T>::is_empty)
     .define_method("n", &kll_sketch<T>::get_n)
     .define_method("num_retained", &kll_sketch<T>::get_num_retained)
@@ -84,42 +36,42 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
     .define_method("quantile", &kll_sketch<T>::get_quantile)
     .define_method(
       "quantiles",
-      *[](kll_sketch<T>& self, Rice::Object obj) {
+      [](kll_sketch<T>& self, Rice::Object obj) {
         if (obj.is_a(rb_cArray)) {
-          auto fractions = from_ruby<std::vector<double>>(obj);
+          auto fractions = Rice::detail::From_Ruby<std::vector<double>>().convert(obj);
           return self.get_quantiles(&fractions[0], fractions.size());
         } else {
-          return self.get_quantiles(from_ruby<size_t>(obj));
+          return self.get_quantiles(Rice::detail::From_Ruby<size_t>().convert(obj));
         }
       })
     .define_method(
       "rank",
-      *[](kll_sketch<T>& self, const T item) {
+      [](kll_sketch<T>& self, const T item) {
         return self.get_rank(item);
       })
     .define_method(
       "pmf",
-      *[](kll_sketch<T>& self, std::vector<T> split_points) {
+      [](kll_sketch<T>& self, std::vector<T> split_points) {
         return self.get_PMF(&split_points[0], split_points.size());
       })
     .define_method(
       "cdf",
-      *[](kll_sketch<T>& self, std::vector<T> split_points) {
+      [](kll_sketch<T>& self, std::vector<T> split_points) {
         return self.get_CDF(&split_points[0], split_points.size());
       })
     .define_method(
       "merge",
-      *[](kll_sketch<T>& self, const kll_sketch<T>& other) {
+      [](kll_sketch<T>& self, const kll_sketch<T>& other) {
         self.merge(other);
       })
     .define_method(
       "update",
-      *[](kll_sketch<T>& self, const T item) {
+      [](kll_sketch<T>& self, const T item) {
         self.update(item);
       })
     .define_method(
       "serialize",
-      *[](kll_sketch<T>& self) {
+      [](kll_sketch<T>& self) {
         std::ostringstream oss;
         self.serialize(oss);
         return oss.str();
@@ -127,12 +79,12 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
     // TODO change to summary?
     .define_method(
       "to_string",
-      *[](kll_sketch<T>& self) {
+      [](kll_sketch<T>& self) {
         return self.to_string();
       })
-    .define_singleton_method(
+    .define_singleton_function(
       "deserialize",
-      *[](std::string& is) {
+      [](std::string& is) {
         std::istringstream iss(is);
         return kll_sketch<T>::deserialize(iss);
       });

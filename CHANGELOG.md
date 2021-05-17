@@ -1,3 +1,7 @@
+## 0.2.0 (unreleased)
+
+- Updated to Rice 4
+
 ## 0.1.2 (2021-01-21)
 
 - Added `CpcUnion` and `UpdateThetaSketch`

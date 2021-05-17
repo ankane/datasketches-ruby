@@ -5,8 +5,7 @@
 #include <theta_intersection.hpp>
 #include <theta_a_not_b.hpp>
 
-#include <rice/Constructor.hpp>
-#include <rice/Module.hpp>
+#include "ext.h"
 
 using datasketches::theta_sketch;
 using datasketches::update_theta_sketch;
@@ -27,76 +26,76 @@ void init_theta(Rice::Module& m) {
     .define_method("upper_bound", &theta_sketch::get_upper_bound)
     .define_method(
       "serialize",
-      *[](theta_sketch& self) {
+      [](theta_sketch& self) {
         std::ostringstream oss;
         self.serialize(oss);
         return oss.str();
       });
 
+  Rice::define_class_under<compact_theta_sketch, theta_sketch>(m, "CompactThetaSketch")
+    .define_singleton_function(
+      "deserialize",
+      [](std::string& is) {
+        std::istringstream iss(is);
+        return compact_theta_sketch::deserialize(iss);
+      });
+
   Rice::define_class_under<update_theta_sketch, theta_sketch>(m, "UpdateThetaSketch")
-    .define_singleton_method(
+    .define_singleton_function(
       "new",
-      *[](uint8_t lg_k, double p, uint64_t seed) {
+      [](uint8_t lg_k, double p, uint64_t seed) {
         update_theta_sketch::builder builder;
         builder.set_lg_k(lg_k);
         builder.set_p(p);
         builder.set_seed(seed);
         return builder.build();
       },
-      (Arg("lg_k")=update_theta_sketch::builder::DEFAULT_LG_K, Arg("p")=1.0, Arg("seed")=DEFAULT_SEED))
-    .define_method("compact", &update_theta_sketch::compact, (Arg("ordered")=true))
+      Arg("lg_k")=update_theta_sketch::builder::DEFAULT_LG_K, Arg("p")=1.0, Arg("seed")=DEFAULT_SEED)
+    .define_method("compact", &update_theta_sketch::compact, Arg("ordered")=true)
     .define_method(
       "update",
-      *[](update_theta_sketch& self, Rice::Object datum) {
+      [](update_theta_sketch& self, Rice::Object datum) {
         if (FIXNUM_P(datum.value())) {
-          return self.update(from_ruby<int64_t>(datum));
+          return self.update(Rice::detail::From_Ruby<int64_t>().convert(datum));
         } else if (datum.is_a(rb_cNumeric)) {
-          return self.update(from_ruby<double>(datum));
+          return self.update(Rice::detail::From_Ruby<double>().convert(datum));
         } else {
           return self.update(datum.to_s().str());
         }
       })
     .define_method(
       "estimate",
-      *[](update_theta_sketch& self) {
+      [](update_theta_sketch& self) {
         return self.get_estimate();
       })
-    .define_singleton_method(
+    .define_singleton_function(
       "deserialize",
-      *[](std::string& is) {
+      [](std::string& is) {
         std::istringstream iss(is);
         return update_theta_sketch::deserialize(iss);
       });
 
-  Rice::define_class_under<compact_theta_sketch, theta_sketch>(m, "CompactThetaSketch")
-    .define_singleton_method(
-      "deserialize",
-      *[](std::string& is) {
-        std::istringstream iss(is);
-        return compact_theta_sketch::deserialize(iss);
-      });
-
   Rice::define_class_under<theta_union>(m, "ThetaUnion")
-    .define_singleton_method(
+    .define_singleton_function(
       "new",
-      *[](uint8_t lg_k, double p, uint64_t seed) {
+      [](uint8_t lg_k, double p, uint64_t seed) {
         theta_union::builder builder;
         builder.set_lg_k(lg_k);
         builder.set_p(p);
         builder.set_seed(seed);
         return builder.build();
       },
-      (Arg("lg_k")=update_theta_sketch::builder::DEFAULT_LG_K, Arg("p")=1.0, Arg("seed")=DEFAULT_SEED))
+      Arg("lg_k")=update_theta_sketch::builder::DEFAULT_LG_K, Arg("p")=1.0, Arg("seed")=DEFAULT_SEED)
     .define_method("update", &theta_union::update)
-    .define_method("result", &theta_union::get_result, (Arg("ordered")=true));
+    .define_method("result", &theta_union::get_result, Arg("ordered")=true);
 
   Rice::define_class_under<theta_intersection>(m, "ThetaIntersection")
-    .define_constructor(Rice::Constructor<theta_intersection, uint64_t>(), (Arg("seed")=DEFAULT_SEED))
+    .define_constructor(Rice::Constructor<theta_intersection, uint64_t>(), Arg("seed")=DEFAULT_SEED)
     .define_method("update", &theta_intersection::update)
-    .define_method("result", &theta_intersection::get_result, (Arg("ordered")=true))
+    .define_method("result", &theta_intersection::get_result, Arg("ordered")=true)
     .define_method("result?", &theta_intersection::has_result);
 
   Rice::define_class_under<theta_a_not_b>(m, "ThetaANotB")
-    .define_constructor(Rice::Constructor<theta_a_not_b, uint64_t>(), (Arg("seed")=DEFAULT_SEED))
-    .define_method("compute", &theta_a_not_b::compute, (Arg("a"), Arg("b"), Arg("ordered")=true));
+    .define_constructor(Rice::Constructor<theta_a_not_b, uint64_t>(), Arg("seed")=DEFAULT_SEED)
+    .define_method("compute", &theta_a_not_b::compute, Arg("a"), Arg("b"), Arg("ordered")=true);
 }
