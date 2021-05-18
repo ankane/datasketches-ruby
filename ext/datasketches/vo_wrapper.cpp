@@ -31,7 +31,7 @@ void bind_vo_sketch(Rice::Module &m, const char* name) {
       "update",
       [](var_opt_sketch<T>& self, const T item) {
         self.update(item);
-      });
+      }, Rice::Arg("item").keepAlive());
 }
 
 void init_vo(Rice::Module& m) {
