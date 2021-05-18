@@ -1,4 +1,4 @@
-## 0.2.0 (unreleased)
+## 0.2.0 (2021-05-17)
 
 - Updated DataSketches to 3.0.0
 - Updated to Rice 4
