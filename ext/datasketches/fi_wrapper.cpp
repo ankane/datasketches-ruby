@@ -35,8 +35,7 @@ void bind_fi_sketch(Rice::Module& m, const char* name) {
       })
     .define_singleton_function(
       "deserialize",
-      // TODO figure out segfault
-      [](const std::string is) {
+      [](const std::string& is) {
         std::istringstream iss(is);
         return datasketches::frequent_items_sketch<T>::deserialize(iss);
       });
