@@ -23,14 +23,7 @@ void init_theta(Rice::Module& m) {
     .define_method("empty?", &theta_sketch::is_empty)
     .define_method("estimate", &theta_sketch::get_estimate)
     .define_method("lower_bound", &theta_sketch::get_lower_bound)
-    .define_method("upper_bound", &theta_sketch::get_upper_bound)
-    .define_method(
-      "serialize",
-      [](theta_sketch& self) {
-        std::ostringstream oss;
-        self.serialize(oss);
-        return oss.str();
-      });
+    .define_method("upper_bound", &theta_sketch::get_upper_bound);
 
   Rice::define_class_under<compact_theta_sketch, theta_sketch>(m, "CompactThetaSketch")
     .define_singleton_function(
@@ -67,12 +60,6 @@ void init_theta(Rice::Module& m) {
       "estimate",
       [](update_theta_sketch& self) {
         return self.get_estimate();
-      })
-    .define_singleton_function(
-      "deserialize",
-      [](const std::string& is) {
-        std::istringstream iss(is);
-        return update_theta_sketch::deserialize(iss);
       });
 
   Rice::define_class_under<theta_union>(m, "ThetaUnion")
@@ -86,16 +73,16 @@ void init_theta(Rice::Module& m) {
         return builder.build();
       },
       Arg("lg_k")=update_theta_sketch::builder::DEFAULT_LG_K, Arg("p")=1.0, Arg("seed")=DEFAULT_SEED)
-    .define_method("update", &theta_union::update)
+    .define_method("update", &theta_union::update<const theta_sketch&>)
     .define_method("result", &theta_union::get_result, Arg("ordered")=true);
 
   Rice::define_class_under<theta_intersection>(m, "ThetaIntersection")
     .define_constructor(Rice::Constructor<theta_intersection, uint64_t>(), Arg("seed")=DEFAULT_SEED)
-    .define_method("update", &theta_intersection::update)
+    .define_method("update", &theta_intersection::update<const theta_sketch&>)
     .define_method("result", &theta_intersection::get_result, Arg("ordered")=true)
     .define_method("result?", &theta_intersection::has_result);
 
   Rice::define_class_under<theta_a_not_b>(m, "ThetaANotB")
     .define_constructor(Rice::Constructor<theta_a_not_b, uint64_t>(), Arg("seed")=DEFAULT_SEED)
-    .define_method("compute", &theta_a_not_b::compute, Arg("a"), Arg("b"), Arg("ordered")=true);
+    .define_method("compute", &theta_a_not_b::compute<const theta_sketch&, const theta_sketch&>, Arg("a"), Arg("b"), Arg("ordered")=true);
 }

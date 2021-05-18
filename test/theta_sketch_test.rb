@@ -14,12 +14,6 @@ class ThetaSketchTest < Minitest::Test
     assert_in_delta 3, sketch.lower_bound(1)
     assert_in_delta 3, sketch.upper_bound(1)
 
-    data = sketch.serialize
-    assert_equal 536, data.bytesize
-
-    sketch = DataSketches::UpdateThetaSketch.deserialize(data)
-    assert_in_delta 3, sketch.estimate
-
     assert_kind_of DataSketches::CompactThetaSketch, sketch.compact
   end
 
