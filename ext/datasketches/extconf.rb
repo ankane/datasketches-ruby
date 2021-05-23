@@ -1,6 +1,6 @@
 require "mkmf-rice"
 
-$CXXFLAGS += " -std=c++17"
+$CXXFLAGS += " -std=c++17 $(optflags)"
 
 ext = File.expand_path(".", __dir__)
 datasketches = File.expand_path("../../vendor/datasketches-cpp", __dir__)
