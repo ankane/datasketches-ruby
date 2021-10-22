@@ -1,8 +1,8 @@
-# DataSketches
+# DataSketches Ruby
 
 [DataSketches](https://datasketches.apache.org/) - sketch data structures - for Ruby
 
-[![Build Status](https://github.com/ankane/datasketches/workflows/build/badge.svg?branch=master)](https://github.com/ankane/datasketches/actions)
+[![Build Status](https://github.com/ankane/datasketches-ruby/workflows/build/badge.svg?branch=master)](https://github.com/ankane/datasketches-ruby/actions)
 
 ## Installation
 
@@ -292,22 +292,22 @@ This library is modeled after the DataSketches [Python API](https://github.com/a
 
 ## History
 
-View the [changelog](https://github.com/ankane/datasketches/blob/master/CHANGELOG.md)
+View the [changelog](https://github.com/ankane/datasketches-ruby/blob/master/CHANGELOG.md)
 
 ## Contributing
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:
 
-- [Report bugs](https://github.com/ankane/datasketches/issues)
-- Fix bugs and [submit pull requests](https://github.com/ankane/datasketches/pulls)
+- [Report bugs](https://github.com/ankane/datasketches-ruby/issues)
+- Fix bugs and [submit pull requests](https://github.com/ankane/datasketches-ruby/pulls)
 - Write, clarify, or fix documentation
 - Suggest or add new features
 
 To get started with development:
 
 ```sh
-git clone --recursive https://github.com/ankane/datasketches.git
-cd datasketches
+git clone --recursive https://github.com/ankane/datasketches-ruby.git
+cd datasketches-ruby
 bundle install
 bundle exec rake compile
 bundle exec rake test
