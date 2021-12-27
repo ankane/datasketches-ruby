@@ -20,10 +20,26 @@ using Rice::Arg;
 
 void init_theta(Rice::Module& m) {
   Rice::define_class_under<theta_sketch>(m, "ThetaSketch")
-    .define_method("empty?", &theta_sketch::is_empty)
-    .define_method("estimate", &theta_sketch::get_estimate)
-    .define_method("lower_bound", &theta_sketch::get_lower_bound)
-    .define_method("upper_bound", &theta_sketch::get_upper_bound);
+    .define_method(
+      "empty?",
+      [](theta_sketch& self) {
+        return self.is_empty();
+      })
+    .define_method(
+      "estimate",
+      [](theta_sketch& self) {
+        return self.get_estimate();
+      })
+    .define_method(
+      "lower_bound",
+      [](theta_sketch& self, uint8_t num_std_devs) {
+        return self.get_lower_bound(num_std_devs);
+      })
+    .define_method(
+      "upper_bound",
+      [](theta_sketch& self, uint8_t num_std_devs) {
+        return self.get_upper_bound(num_std_devs);
+      });
 
   Rice::define_class_under<compact_theta_sketch, theta_sketch>(m, "CompactThetaSketch")
     .define_singleton_function(
