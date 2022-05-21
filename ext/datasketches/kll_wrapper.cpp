@@ -33,7 +33,11 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
     .define_method("estimation_mode?", &kll_sketch<T>::is_estimation_mode)
     .define_method("min_value", &kll_sketch<T>::get_min_value)
     .define_method("max_value", &kll_sketch<T>::get_max_value)
-    .define_method("quantile", &kll_sketch<T>::get_quantile)
+    .define_method(
+      "quantile",
+      [](kll_sketch<T>& self, double fraction) {
+        return self.get_quantile(fraction);
+      })
     .define_method(
       "quantiles",
       [](kll_sketch<T>& self, Rice::Object obj) {
