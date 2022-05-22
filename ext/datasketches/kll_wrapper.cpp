@@ -55,12 +55,12 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
       })
     .define_method(
       "pmf",
-      [](kll_sketch<T>& self, std::vector<T> split_points) {
+      [](kll_sketch<T>& self, const std::vector<T>& split_points) {
         return self.get_PMF(&split_points[0], split_points.size());
       })
     .define_method(
       "cdf",
-      [](kll_sketch<T>& self, std::vector<T> split_points) {
+      [](kll_sketch<T>& self, const std::vector<T>& split_points) {
         return self.get_CDF(&split_points[0], split_points.size());
       })
     .define_method(
