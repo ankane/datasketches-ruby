@@ -1,3 +1,7 @@
+## 0.2.6 (unreleased)
+
+- Updated DataSketches to 3.5.0
+
 ## 0.2.5 (2022-05-21)
 
 - Updated DataSketches to 3.4.0
