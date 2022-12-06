@@ -26,43 +26,43 @@ namespace Rice::detail
 template<typename T>
 void bind_kll_sketch(Rice::Module& m, const char* name) {
   Rice::define_class_under<kll_sketch<T>>(m, name)
-    .define_constructor(Rice::Constructor<kll_sketch<T>, uint16_t>(), Rice::Arg("k")=kll_sketch<T>::DEFAULT_K)
+    .define_constructor(Rice::Constructor<kll_sketch<T>, uint16_t>(), Rice::Arg("k")=datasketches::kll_constants::DEFAULT_K)
     .define_method("empty?", &kll_sketch<T>::is_empty)
     .define_method("n", &kll_sketch<T>::get_n)
     .define_method("num_retained", &kll_sketch<T>::get_num_retained)
     .define_method("estimation_mode?", &kll_sketch<T>::is_estimation_mode)
-    .define_method("min_value", &kll_sketch<T>::get_min_value)
-    .define_method("max_value", &kll_sketch<T>::get_max_value)
+    .define_method("min_value", &kll_sketch<T>::get_min_item)
+    .define_method("max_value", &kll_sketch<T>::get_max_item)
     .define_method(
       "quantile",
-      [](kll_sketch<T>& self, double fraction) {
-        return self.get_quantile(fraction);
-      })
+      [](kll_sketch<T>& self, double rank, bool inclusive) {
+        return self.get_quantile(rank, inclusive);
+      }, Rice::Arg("rank"), Rice::Arg("inclusive")=false)
     .define_method(
       "quantiles",
-      [](kll_sketch<T>& self, Rice::Object obj) {
+      [](kll_sketch<T>& self, Rice::Object obj, bool inclusive) {
         if (obj.is_a(rb_cArray)) {
-          auto fractions = Rice::detail::From_Ruby<std::vector<double>>().convert(obj);
-          return self.get_quantiles(&fractions[0], fractions.size());
+          auto ranks = Rice::detail::From_Ruby<std::vector<double>>().convert(obj);
+          return self.get_quantiles(&ranks[0], ranks.size(), inclusive);
         } else {
-          return self.get_quantiles(Rice::detail::From_Ruby<size_t>().convert(obj));
+          return self.get_quantiles(Rice::detail::From_Ruby<size_t>().convert(obj), inclusive);
         }
-      })
+      }, Rice::Arg("obj"), Rice::Arg("inclusive")=false)
     .define_method(
       "rank",
-      [](kll_sketch<T>& self, const T item) {
-        return self.get_rank(item);
-      })
+      [](kll_sketch<T>& self, const T item, bool inclusive) {
+        return self.get_rank(item, inclusive);
+      }, Rice::Arg("item"), Rice::Arg("inclusive")=false)
     .define_method(
       "pmf",
-      [](kll_sketch<T>& self, const std::vector<T>& split_points) {
-        return self.get_PMF(&split_points[0], split_points.size());
-      })
+      [](kll_sketch<T>& self, const std::vector<T>& split_points, bool inclusive) {
+        return self.get_PMF(&split_points[0], split_points.size(), inclusive);
+      }, Rice::Arg("split_points"), Rice::Arg("inclusive")=false)
     .define_method(
       "cdf",
-      [](kll_sketch<T>& self, const std::vector<T>& split_points) {
-        return self.get_CDF(&split_points[0], split_points.size());
-      })
+      [](kll_sketch<T>& self, const std::vector<T>& split_points, bool inclusive) {
+        return self.get_CDF(&split_points[0], split_points.size(), inclusive);
+      }, Rice::Arg("split_points"), Rice::Arg("inclusive")=false)
     .define_method(
       "merge",
       [](kll_sketch<T>& self, const kll_sketch<T>& other) {

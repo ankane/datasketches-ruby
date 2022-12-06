@@ -59,4 +59,23 @@ class KllSketchTest < Minitest::Test
     sketch.merge(other)
     assert_equal 2, sketch.max_value
   end
+
+  def test_empty
+    sketch = DataSketches::KllIntsSketch.new
+
+    error = assert_raises do
+      sketch.quantile(0.5)
+    end
+    assert_equal "operation is undefined for an empty sketch", error.message
+
+    error = assert_raises do
+      sketch.quantiles([0, 0.25, 0.5, 0.75, 1])
+    end
+    assert_equal "operation is undefined for an empty sketch", error.message
+
+    error = assert_raises do
+      sketch.rank(1)
+    end
+    assert_equal "operation is undefined for an empty sketch", error.message
+  end
 end
