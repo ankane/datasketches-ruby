@@ -61,7 +61,7 @@ void init_cpc(Rice::Module& m) {
     .define_method("result", &cpc_union::get_result)
     .define_method(
       "update",
-      [](cpc_union& self, cpc_sketch& sketch) {
+      [](cpc_union& self, const cpc_sketch& sketch) {
         self.update(sketch);
       });
 }
