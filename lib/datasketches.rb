@@ -2,7 +2,7 @@
 require "datasketches/ext"
 
 # modules
-require "datasketches/version"
+require_relative "datasketches/version"
 
 module DataSketches
   class Error < StandardError; end
