@@ -1,4 +1,4 @@
-## 0.4.0 (unreleased)
+## 0.4.0 (2023-11-13)
 
 - Updated DataSketches to 5.0.0
 - Removed `quantiles` method from KLL sketches
