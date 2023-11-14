@@ -1,6 +1,7 @@
 ## 0.4.0 (unreleased)
 
 - Updated DataSketches to 5.0.0
+- Dropped support for Ruby < 3
 
 ## 0.3.2 (2023-05-03)
 
