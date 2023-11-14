@@ -11,8 +11,6 @@ class KllSketchTest < Minitest::Test
     assert_equal 1, sketch.min_value
     assert_equal 3, sketch.max_value
     assert_in_delta 2, sketch.quantile(0.5)
-    assert_equal [1, 1, 2, 3, 3], sketch.quantiles([0, 0.25, 0.5, 0.75, 1])
-    assert_equal [1, 2, 3], sketch.quantiles(3)
     assert_in_delta 0, sketch.rank(1)
     assert_in_delta 1, sketch.rank(4)
     # TODO better test
@@ -38,7 +36,6 @@ class KllSketchTest < Minitest::Test
     assert_in_delta 1, sketch.min_value
     assert_in_delta 3, sketch.max_value
     assert_in_delta 2, sketch.quantile(0.5)
-    assert_equal [1, 1, 2, 3, 3], sketch.quantiles([0, 0.25, 0.5, 0.75, 1])
 
     data = sketch.serialize
     assert_equal 44, data.bytesize
@@ -65,11 +62,6 @@ class KllSketchTest < Minitest::Test
 
     error = assert_raises do
       sketch.quantile(0.5)
-    end
-    assert_equal "operation is undefined for an empty sketch", error.message
-
-    error = assert_raises do
-      sketch.quantiles([0, 0.25, 0.5, 0.75, 1])
     end
     assert_equal "operation is undefined for an empty sketch", error.message
 

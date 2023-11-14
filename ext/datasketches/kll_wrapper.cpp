@@ -39,16 +39,6 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
         return self.get_quantile(rank, inclusive);
       }, Rice::Arg("rank"), Rice::Arg("inclusive")=false)
     .define_method(
-      "quantiles",
-      [](kll_sketch<T>& self, Rice::Object obj, bool inclusive) {
-        if (obj.is_a(rb_cArray)) {
-          auto ranks = Rice::detail::From_Ruby<std::vector<double>>().convert(obj);
-          return self.get_quantiles(&ranks[0], ranks.size(), inclusive);
-        } else {
-          return self.get_quantiles(Rice::detail::From_Ruby<size_t>().convert(obj), inclusive);
-        }
-      }, Rice::Arg("obj"), Rice::Arg("inclusive")=false)
-    .define_method(
       "rank",
       [](kll_sketch<T>& self, const T item, bool inclusive) {
         return self.get_rank(item, inclusive);

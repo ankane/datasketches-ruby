@@ -8,14 +8,14 @@
 using datasketches::cpc_sketch;
 using datasketches::cpc_union;
 
-using datasketches::CPC_DEFAULT_LG_K;
+using datasketches::cpc_constants::DEFAULT_LG_K;
 using datasketches::DEFAULT_SEED;
 
 using Rice::Arg;
 
 void init_cpc(Rice::Module& m) {
   Rice::define_class_under<cpc_sketch>(m, "CpcSketch")
-    .define_constructor(Rice::Constructor<cpc_sketch, uint8_t, uint64_t>(), Rice::Arg("lg_k")=CPC_DEFAULT_LG_K, Rice::Arg("seed")=DEFAULT_SEED)
+    .define_constructor(Rice::Constructor<cpc_sketch, uint8_t, uint64_t>(), Rice::Arg("lg_k")=DEFAULT_LG_K, Rice::Arg("seed")=DEFAULT_SEED)
     .define_method("lg_k", &cpc_sketch::get_lg_k)
     .define_method("empty?", &cpc_sketch::is_empty)
     .define_method("lower_bound", &cpc_sketch::get_lower_bound)
