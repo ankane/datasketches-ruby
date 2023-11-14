@@ -235,8 +235,6 @@ Get quantiles
 
 ```ruby
 sketch.quantile(0.5)
-sketch.quantiles([0.25, 0.5, 0.75])
-sketch.quantiles(3)
 ```
 
 Get the minimum and maximum values from the stream
