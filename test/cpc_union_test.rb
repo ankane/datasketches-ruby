@@ -15,7 +15,6 @@ class CpcUnionTest < Minitest::Test
     u = DataSketches::CpcUnion.new(14)
     u.update(sketch1)
     u.update(sketch2)
-    # TODO figure out std::bad_any_cast on Mac ARM
-    # assert_in_delta 5, u.result.estimate
+    assert_in_delta 5, u.result.estimate
   end
 end
