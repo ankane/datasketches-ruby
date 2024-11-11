@@ -2,7 +2,7 @@
 
 [DataSketches](https://datasketches.apache.org/) - sketch data structures - for Ruby
 
-[![Build Status](https://github.com/ankane/datasketches-ruby/workflows/build/badge.svg?branch=master)](https://github.com/ankane/datasketches-ruby/actions)
+[![Build Status](https://github.com/ankane/datasketches-ruby/actions/workflows/build.yml/badge.svg)](https://github.com/ankane/datasketches-ruby/actions)
 
 ## Installation
 

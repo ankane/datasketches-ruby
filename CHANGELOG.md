@@ -1,3 +1,7 @@
+## 0.4.3 (2024-08-02)
+
+- Updated DataSketches to 5.1.0
+
 ## 0.4.2 (2024-01-13)
 
 - Updated DataSketches to 5.0.2
