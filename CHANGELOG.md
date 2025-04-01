@@ -1,3 +1,7 @@
+## 0.5.0 (unreleased)
+
+- Dropped support for Ruby < 3.2
+
 ## 0.4.4 (2025-01-15)
 
 - Updated DataSketches to 5.2.0
