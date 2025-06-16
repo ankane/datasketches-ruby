@@ -12,8 +12,6 @@ using datasketches::cpc_union;
 using datasketches::cpc_constants::DEFAULT_LG_K;
 using datasketches::DEFAULT_SEED;
 
-using Rice::Arg;
-
 void init_cpc(Rice::Module& m) {
   Rice::define_class_under<cpc_sketch>(m, "CpcSketch")
     .define_constructor(Rice::Constructor<cpc_sketch, uint8_t, uint64_t>(), Rice::Arg("lg_k")=DEFAULT_LG_K, Rice::Arg("seed")=DEFAULT_SEED)
