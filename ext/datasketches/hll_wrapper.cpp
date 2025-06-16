@@ -1,8 +1,9 @@
 #include <sstream>
+#include <string>
 
 #include <hll.hpp>
-
-#include "ext.h"
+#include <rice/rice.hpp>
+#include <rice/stl.hpp>
 
 using datasketches::hll_sketch;
 using datasketches::hll_union;

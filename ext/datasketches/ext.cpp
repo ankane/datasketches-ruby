@@ -1,4 +1,4 @@
-#include "ext.h"
+#include <rice/rice.hpp>
 
 void init_cpc(Rice::Module& m);
 void init_fi(Rice::Module& m);
@@ -8,8 +8,7 @@ void init_theta(Rice::Module& m);
 void init_vo(Rice::Module& m);
 
 extern "C"
-void Init_ext()
-{
+void Init_ext() {
   Rice::Module m = Rice::define_module("DataSketches");
   init_cpc(m);
   init_fi(m);

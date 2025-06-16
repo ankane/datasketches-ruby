@@ -1,11 +1,12 @@
 #include <sstream>
+#include <string>
 
+#include <rice/rice.hpp>
+#include <rice/stl.hpp>
 #include <theta_sketch.hpp>
 #include <theta_union.hpp>
 #include <theta_intersection.hpp>
 #include <theta_a_not_b.hpp>
-
-#include "ext.h"
 
 using datasketches::theta_sketch;
 using datasketches::update_theta_sketch;

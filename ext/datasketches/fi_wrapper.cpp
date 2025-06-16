@@ -1,8 +1,9 @@
 #include <sstream>
+#include <string>
 
 #include <frequent_items_sketch.hpp>
-
-#include "ext.h"
+#include <rice/rice.hpp>
+#include <rice/stl.hpp>
 
 template<typename T>
 void bind_fi_sketch(Rice::Module& m, const char* name) {

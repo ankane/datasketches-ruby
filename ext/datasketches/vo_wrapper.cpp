@@ -1,8 +1,8 @@
 #include <sstream>
 
+#include <rice/rice.hpp>
+#include <rice/stl.hpp>
 #include <var_opt_sketch.hpp>
-
-#include "ext.h"
 
 using datasketches::var_opt_sketch;
 

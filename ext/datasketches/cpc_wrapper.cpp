@@ -1,9 +1,10 @@
 #include <sstream>
+#include <string>
 
 #include <cpc_sketch.hpp>
 #include <cpc_union.hpp>
-
-#include "ext.h"
+#include <rice/rice.hpp>
+#include <rice/stl.hpp>
 
 using datasketches::cpc_sketch;
 using datasketches::cpc_union;

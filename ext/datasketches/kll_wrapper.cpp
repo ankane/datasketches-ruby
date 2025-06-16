@@ -1,19 +1,18 @@
 #include <sstream>
+#include <string>
+#include <vector>
 
 #include <kll_sketch.hpp>
-
-#include "ext.h"
+#include <rice/rice.hpp>
+#include <rice/stl.hpp>
 
 using datasketches::kll_sketch;
 
-namespace Rice::detail
-{
+namespace Rice::detail {
   template<typename T>
-  class To_Ruby<std::vector<T>>
-  {
+  class To_Ruby<std::vector<T>> {
   public:
-    VALUE convert(std::vector<T> const & x)
-    {
+    VALUE convert(std::vector<T> const & x) {
       auto a = rb_ary_new2(x.size());
       for (const auto& v : x) {
         detail::protect(rb_ary_push, a, To_Ruby<T>().convert(v));
@@ -21,7 +20,7 @@ namespace Rice::detail
       return a;
     }
   };
-}
+} // namespace Rice::detail
 
 template<typename T>
 void bind_kll_sketch(Rice::Module& m, const char* name) {
