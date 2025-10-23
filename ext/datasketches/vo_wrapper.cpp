@@ -21,9 +21,9 @@ void bind_vo_sketch(Rice::Module &m, const char* name) {
         auto a = Rice::Array();
         for (auto item : self) {
           auto t = Rice::Array();
-          t.push(item.first);
-          t.push(item.second);
-          a.push(t);
+          t.push(item.first, false);
+          t.push(item.second, false);
+          a.push(t, false);
         }
         return a;
       })
