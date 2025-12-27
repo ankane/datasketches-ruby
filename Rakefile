@@ -14,8 +14,9 @@ Rake::ExtensionTask.new("datasketches") do |ext|
 end
 
 task :remove_ext do
-  path = "lib/datasketches/ext.bundle"
-  File.unlink(path) if File.exist?(path)
+  Dir["lib/datasketches/ext.{bundle,so}"].each do |path|
+    File.unlink(path)
+  end
 end
 
 Rake::Task["build"].enhance [:remove_ext]
