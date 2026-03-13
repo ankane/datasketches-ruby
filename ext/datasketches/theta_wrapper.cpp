@@ -80,14 +80,14 @@ void init_theta(Rice::Module& m) {
   Rice::define_class_under<theta_union>(m, "ThetaUnion")
     .define_singleton_function(
       "new",
-      [](uint8_t lg_k, double p, uint64_t seed) {
+      [](uint8_t lg_k, float p, uint64_t seed) {
         theta_union::builder builder;
         builder.set_lg_k(lg_k);
         builder.set_p(p);
         builder.set_seed(seed);
         return builder.build();
       },
-      Rice::Arg("lg_k")=datasketches::theta_constants::DEFAULT_LG_K, Rice::Arg("p")=1.0, Rice::Arg("seed")=DEFAULT_SEED)
+      Rice::Arg("lg_k")=datasketches::theta_constants::DEFAULT_LG_K, Rice::Arg("p")=1.0f, Rice::Arg("seed")=DEFAULT_SEED)
     .define_method("update", &theta_union::update<const theta_sketch&>)
     .define_method("result", &theta_union::get_result, Rice::Arg("ordered")=true);
 
