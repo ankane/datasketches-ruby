@@ -52,12 +52,12 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
     .define_method(
       "pmf",
       [](kll_sketch<T>& self, const std::vector<T>& split_points, bool inclusive) {
-        return self.get_PMF(&split_points[0], split_points.size(), inclusive);
+        return self.get_PMF(split_points.data(), split_points.size(), inclusive);
       }, Rice::Arg("split_points"), Rice::Arg("inclusive")=false)
     .define_method(
       "cdf",
       [](kll_sketch<T>& self, const std::vector<T>& split_points, bool inclusive) {
-        return self.get_CDF(&split_points[0], split_points.size(), inclusive);
+        return self.get_CDF(split_points.data(), split_points.size(), inclusive);
       }, Rice::Arg("split_points"), Rice::Arg("inclusive")=false)
     .define_method(
       "merge",

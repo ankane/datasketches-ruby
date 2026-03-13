@@ -3,10 +3,10 @@
 
 #include <rice/rice.hpp>
 #include <rice/stl.hpp>
+#include <theta_a_not_b.hpp>
+#include <theta_intersection.hpp>
 #include <theta_sketch.hpp>
 #include <theta_union.hpp>
-#include <theta_intersection.hpp>
-#include <theta_a_not_b.hpp>
 
 using datasketches::theta_sketch;
 using datasketches::update_theta_sketch;
@@ -64,11 +64,11 @@ void init_theta(Rice::Module& m) {
       "update",
       [](update_theta_sketch& self, Rice::Object datum) {
         if (FIXNUM_P(datum.value())) {
-          return self.update(Rice::detail::From_Ruby<int64_t>().convert(datum));
+          self.update(Rice::detail::From_Ruby<int64_t>().convert(datum));
         } else if (datum.is_a(rb_cNumeric)) {
-          return self.update(Rice::detail::From_Ruby<double>().convert(datum));
+          self.update(Rice::detail::From_Ruby<double>().convert(datum));
         } else {
-          return self.update(datum.to_s().str());
+          self.update(datum.to_s().str());
         }
       })
     .define_method(
