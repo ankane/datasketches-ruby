@@ -5,7 +5,6 @@
 
 #include <kll_sketch.hpp>
 #include <rice/rice.hpp>
-#include <rice/stl.hpp>
 
 using datasketches::kll_sketch;
 
@@ -52,12 +51,14 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
       }, Rice::Arg("item"), Rice::Arg("inclusive")=false)
     .define_method(
       "pmf",
-      [](kll_sketch<T>& self, const std::vector<T>& split_points, bool inclusive) {
+      [](kll_sketch<T>& self, Rice::Array rb_split_points, bool inclusive) {
+        std::vector<T> split_points = rb_split_points.to_vector<T>();
         return self.get_PMF(split_points.data(), split_points.size(), inclusive);
       }, Rice::Arg("split_points"), Rice::Arg("inclusive")=false)
     .define_method(
       "cdf",
-      [](kll_sketch<T>& self, const std::vector<T>& split_points, bool inclusive) {
+      [](kll_sketch<T>& self, Rice::Array rb_split_points, bool inclusive) {
+        std::vector<T> split_points = rb_split_points.to_vector<T>();
         return self.get_CDF(split_points.data(), split_points.size(), inclusive);
       }, Rice::Arg("split_points"), Rice::Arg("inclusive")=false)
     .define_method(
