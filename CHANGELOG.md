@@ -1,5 +1,6 @@
 ## 0.5.2 (unreleased)
 
+- Improved installation time
 - Fixed unnecessary copying with `deserialize` method
 
 ## 0.5.1 (2025-10-26)
