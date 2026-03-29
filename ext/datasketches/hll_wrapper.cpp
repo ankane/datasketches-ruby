@@ -54,8 +54,7 @@ void init_hll(Rice::Module& m) {
     .define_singleton_function(
       "deserialize",
       [](Rice::String is) {
-        std::istringstream iss(is.str());
-        return hll_sketch::deserialize(iss);
+        return hll_sketch::deserialize(is.c_str(), is.length());
       });
 
   Rice::define_class_under<hll_union>(m, "HllUnion")

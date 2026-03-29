@@ -1,3 +1,7 @@
+## 0.5.2 (unreleased)
+
+- Fixed unnecessary copying with `deserialize` method
+
 ## 0.5.1 (2025-10-26)
 
 - Fixed error with Rice 4.7

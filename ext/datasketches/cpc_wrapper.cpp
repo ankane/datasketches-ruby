@@ -51,8 +51,7 @@ void init_cpc(Rice::Module& m) {
     .define_singleton_function(
       "deserialize",
       [](Rice::String is) {
-        std::istringstream iss(is.str());
-        return cpc_sketch::deserialize(iss);
+        return cpc_sketch::deserialize(is.c_str(), is.length());
       });
 
   Rice::define_class_under<cpc_union>(m, "CpcUnion")

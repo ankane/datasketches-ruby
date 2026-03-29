@@ -1,5 +1,4 @@
 #include <cstdint>
-#include <sstream>
 #include <string>
 
 #include <rice/rice.hpp>
@@ -44,8 +43,7 @@ void init_theta(Rice::Module& m) {
     .define_singleton_function(
       "deserialize",
       [](Rice::String is) {
-        std::istringstream iss(is.str());
-        return compact_theta_sketch::deserialize(iss);
+        return compact_theta_sketch::deserialize(is.c_str(), is.length());
       });
 
   Rice::define_class_under<update_theta_sketch, theta_sketch>(m, "UpdateThetaSketch")

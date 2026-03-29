@@ -38,8 +38,7 @@ void bind_fi_sketch(Rice::Module& m, const char* name) {
     .define_singleton_function(
       "deserialize",
       [](Rice::String is) {
-        std::istringstream iss(is.str());
-        return datasketches::frequent_items_sketch<T>::deserialize(iss);
+        return datasketches::frequent_items_sketch<T>::deserialize(is.c_str(), is.length());
       });
 }
 
