@@ -1,7 +1,6 @@
 #include <cstdint>
 
 #include <rice/rice.hpp>
-#include <rice/stl.hpp>
 #include <var_opt_sketch.hpp>
 
 using datasketches::var_opt_sketch;

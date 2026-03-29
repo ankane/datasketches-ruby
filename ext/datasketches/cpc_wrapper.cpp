@@ -5,7 +5,6 @@
 #include <cpc_sketch.hpp>
 #include <cpc_union.hpp>
 #include <rice/rice.hpp>
-#include <rice/stl.hpp>
 
 using datasketches::cpc_sketch;
 using datasketches::cpc_union;
@@ -41,18 +40,18 @@ void init_cpc(Rice::Module& m) {
       [](cpc_sketch& self) {
         std::ostringstream oss;
         self.serialize(oss);
-        return oss.str();
+        return Rice::String(oss.str());
       })
     // TODO change to summary?
     .define_method(
       "to_string",
       [](cpc_sketch& self) {
-        return self.to_string();
+        return Rice::String(self.to_string());
       })
     .define_singleton_function(
       "deserialize",
-      [](const std::string& is) {
-        std::istringstream iss(is);
+      [](Rice::String is) {
+        std::istringstream iss(is.str());
         return cpc_sketch::deserialize(iss);
       });
 

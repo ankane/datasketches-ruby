@@ -3,7 +3,6 @@
 #include <string>
 
 #include <rice/rice.hpp>
-#include <rice/stl.hpp>
 #include <theta_a_not_b.hpp>
 #include <theta_intersection.hpp>
 #include <theta_sketch.hpp>
@@ -44,8 +43,8 @@ void init_theta(Rice::Module& m) {
   Rice::define_class_under<compact_theta_sketch, theta_sketch>(m, "CompactThetaSketch")
     .define_singleton_function(
       "deserialize",
-      [](const std::string& is) {
-        std::istringstream iss(is);
+      [](Rice::String is) {
+        std::istringstream iss(is.str());
         return compact_theta_sketch::deserialize(iss);
       });
 

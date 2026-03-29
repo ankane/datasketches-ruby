@@ -27,18 +27,18 @@ void bind_fi_sketch(Rice::Module& m, const char* name) {
       [](datasketches::frequent_items_sketch<T>& self) {
         std::ostringstream oss;
         self.serialize(oss);
-        return oss.str();
+        return Rice::String(oss.str());
       })
     // TODO change to summary?
     .define_method(
       "to_string",
       [](datasketches::frequent_items_sketch<T>& self) {
-        return self.to_string();
+        return Rice::String(self.to_string());
       })
     .define_singleton_function(
       "deserialize",
-      [](const std::string& is) {
-        std::istringstream iss(is);
+      [](Rice::String is) {
+        std::istringstream iss(is.str());
         return datasketches::frequent_items_sketch<T>::deserialize(iss);
       });
 }

@@ -4,7 +4,6 @@
 
 #include <hll.hpp>
 #include <rice/rice.hpp>
-#include <rice/stl.hpp>
 
 using datasketches::hll_sketch;
 using datasketches::hll_union;
@@ -37,25 +36,25 @@ void init_hll(Rice::Module& m) {
       [](hll_sketch& self) {
         std::ostringstream oss;
         self.serialize_compact(oss);
-        return oss.str();
+        return Rice::String(oss.str());
       })
     .define_method(
       "serialize_updatable",
       [](hll_sketch& self) {
         std::ostringstream oss;
         self.serialize_updatable(oss);
-        return oss.str();
+        return Rice::String(oss.str());
       })
     // TODO change to summary?
     .define_method(
       "to_string",
       [](hll_sketch& self) {
-        return self.to_string();
+        return Rice::String(self.to_string());
       })
     .define_singleton_function(
       "deserialize",
-      [](const std::string& is) {
-        std::istringstream iss(is);
+      [](Rice::String is) {
+        std::istringstream iss(is.str());
         return hll_sketch::deserialize(iss);
       });
 

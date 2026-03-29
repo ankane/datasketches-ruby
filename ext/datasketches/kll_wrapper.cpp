@@ -75,18 +75,18 @@ void bind_kll_sketch(Rice::Module& m, const char* name) {
       [](kll_sketch<T>& self) {
         std::ostringstream oss;
         self.serialize(oss);
-        return oss.str();
+        return Rice::String(oss.str());
       })
     // TODO change to summary?
     .define_method(
       "to_string",
       [](kll_sketch<T>& self) {
-        return self.to_string();
+        return Rice::String(self.to_string());
       })
     .define_singleton_function(
       "deserialize",
-      [](const std::string& is) {
-        std::istringstream iss(is);
+      [](Rice::String is) {
+        std::istringstream iss(is.str());
         return kll_sketch<T>::deserialize(iss);
       });
 }
