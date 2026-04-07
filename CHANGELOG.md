@@ -1,4 +1,4 @@
-## 0.5.2 (unreleased)
+## 0.5.2 (2026-04-06)
 
 - Improved installation time
 - Fixed unnecessary copying with `deserialize` method
