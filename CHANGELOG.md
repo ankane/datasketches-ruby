@@ -1,3 +1,7 @@
+## 0.5.3 (unreleased)
+
+- Updated DataSketches to 5.3.0
+
 ## 0.5.2 (2026-04-06)
 
 - Improved installation time

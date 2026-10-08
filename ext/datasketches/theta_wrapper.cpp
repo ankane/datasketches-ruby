@@ -57,7 +57,7 @@ void init_theta(Rice::Module& m) {
         return builder.build();
       },
       Rice::Arg("lg_k")=datasketches::theta_constants::DEFAULT_LG_K, Rice::Arg("p")=1.0, Rice::Arg("seed")=DEFAULT_SEED)
-    .define_method("compact", &update_theta_sketch::compact, Rice::Arg("ordered")=true)
+    .define_method("compact", &update_theta_sketch::compact, Rice::Arg("ordered")=true, Rice::Arg("trim")=false)
     .define_method(
       "update",
       [](update_theta_sketch& self, Rice::Object datum) {
