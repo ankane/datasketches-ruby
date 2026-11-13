@@ -1,4 +1,4 @@
-## 0.5.4 (unreleased)
+## 0.5.4 (2026-11-13)
 
 - Updated DataSketches to 5.3.1
 
